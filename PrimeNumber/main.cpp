@@ -108,10 +108,10 @@ u64 intrinPrimeD(u64 max) {
 	double mulValue = bottom * floored;
 	double remainder = top - mulValue;
 	*/
-	u64 amountOfPrimes = 1;
+	/*u64 amountOfPrimes = 1;
 	double testNumbers[4];
 	for (int i = 0; i < 4; i++)
-		testNumbers[i] = (double)(3 + i);
+		testNumbers[i] = (double)(88 + i);
 	__m256d one = _mm256_set1_pd(1.0);
 	__m256d four = _mm256_set1_pd(4.0);
 	__m256d initValues = _mm256_set1_pd(2.0);
@@ -121,10 +121,31 @@ u64 intrinPrimeD(u64 max) {
 	__m256d floored = _mm256_floor_pd(nonFloored);
 	__m256d mulValue = _mm256_mul_pd(bottom, floored);
 	__m256d remainders = _mm256_sub_pd(top, mulValue);
-	__m256d equq = _mm256_cmp_pd(remainders, one, 8);
-	__m256d eqos = _mm256_cmp_pd(remainders, one, 16);
-	__m256d equs = _mm256_cmp_pd(remainders, one, 24);
-	return amountOfPrimes;
+	__m256d eqoq = _mm256_cmp_pd(remainders, one, 0);
+	double newNumbers[4];
+	_mm256_maskstore_pd(newNumbers, _mm256_castpd_si256(eqoq), top);*/
+	max = max - (max % 4);
+	u64 amountOfPrimes = 1;
+	__m256d one = _mm256_set1_pd(1.0);
+	__m256d zero = _mm256_setzero_pd();
+	__m256d initValuesTesting = _mm256_set1_pd(2.0);
+	__m256d top, bottom, nonFloored, floored, mulValue, remainders;
+	double* nums = (double*)malloc(sizeof(double) * 4);
+	for (u64 i = 2; i < max; i += 4) {
+		top = _mm256_set_pd((double)i, (double)i + 1, (double)i + 2, (double)i + 3);
+		bottom = _mm256_movedup_pd(initValuesTesting);
+		for (u64 inner = i; inner < i + 4; i++) {
+			nonFloored = _mm256_div_pd(top, bottom);
+			floored = _mm256_floor_pd(nonFloored);
+			mulValue = _mm256_mul_pd(bottom, floored);
+			remainders = _mm256_sub_pd(top, mulValue);
+			__m256d checkRemainders = _mm256_cmp_pd(remainders, one, 0);
+			bottom = _mm256_add_pd(bottom,one);
+		}
+	}
+	free(nums);
+
+	return 0;
 }
 
 
