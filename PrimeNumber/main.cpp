@@ -2,15 +2,15 @@
 
 using namespace std;
 int main() {
-	u64 tests = 1;
-	u64 max = 75000;
+	u64 tests = 5;
+	u64 max = 1000000;
 	double averageCPP=0;
 	double averageASM=0;
 
 	thread cppThread(cppPrimeTestThreads, max, tests, 1, &averageCPP);
 	thread asmThread(asmPrimeTestThreads, max, tests, 1, &averageASM);
-	u64 primes=intrinPrimeD(max);
-	printf("Amount of primes: %llu\n", primes);
+	//u64 primes=intrinPrimeD(max);
+	//printf("Amount of primes: %llu\n", primes);
 	
 	
 	//cppPrimeTestThreads(max, tests, 1, &averageCPP);

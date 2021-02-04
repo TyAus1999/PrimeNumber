@@ -2,11 +2,12 @@
 #include "inc.h"
 
 extern "C" u64 primeNumberCheck(u64 max);
+extern "C" u64 primeNumberCheckOp(u64 max);
 
 double asmPrimeNumber(u64 max) {
 	u64 primes = 0;
 	u64 startTime = getCurrentTimeMS();
-	primes = primeNumberCheck(max);
+	primes = primeNumberCheckOp(max);
 	u64 endTime = getCurrentTimeMS();
 	printf("ASM\n");
 	printStuff(startTime, endTime, primes, max);
