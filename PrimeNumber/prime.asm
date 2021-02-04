@@ -51,6 +51,7 @@ primeNumberCheck proc
 	ret
 primeNumberCheck endp
 ;RCX is max, less than or equal too
+;RDX is where to start
 public primeNumberCheckOp
 primeNumberCheckOp proc
 	push	rbx;Inner loop var
@@ -58,11 +59,13 @@ primeNumberCheckOp proc
 	push	r14;Amount of primes
 	push	r13;Half of innerLoop
 	push	r12;Temp register for use in factors
+	push	r11;Value to stop at
 
-	xor		r14,r14
+	mov		r11,rdx
+	mov		r14, 1
 
 	primeNumberCheckOp_L1:
-		cmp		rcx,0
+		cmp		rcx,r11
 		je		primeNumberCheckOp_End
 		xor		r15,r15
 		mov		rbx,2
@@ -100,6 +103,7 @@ primeNumberCheckOp proc
 		jmp primeNumberCheckOp_L1
 	primeNumberCheckOp_End:
 	mov		rax,r14
+	pop		r11
 	pop		r12
 	pop		r13
 	pop		r14
