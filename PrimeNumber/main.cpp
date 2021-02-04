@@ -20,7 +20,23 @@ int main() {
 	
 	printf("Amount of times tested: %llu\n", tests);
 	printf("Max number: %llu\n", max);
-	printf("Average time for C++: %llfs\n", averageCPP);
-	printf("Average time for ASM: %llfs\n", averageASM);
+	if (averageCPP > 60.0) {
+		double minutes=averageCPP/60.0;
+		double decimals = minutes - floor(minutes);
+		minutes = floor(minutes);
+		decimals *= 60;
+		printf("Average time for C++: %llfm:%llfs", minutes, decimals);
+	}
+	else
+		printf("Average time for C++: %llfs\n", averageCPP);
+	if (averageASM > 60.0) {
+		double minutes = averageASM / 60.0;
+		double decimals = minutes - floor(minutes);
+		minutes = floor(minutes);
+		decimals *= 60;
+		printf("Average time for ASM: %llfm:%llfs", minutes, decimals);
+	}
+	else
+		printf("Average time for ASM: %llfs\n", averageASM);
 	return 0;
 }
