@@ -7,16 +7,22 @@ int main() {
 	double averageCPP=0;
 	double averageASM=0;
 
-	//thread cppThread(cppPrimeTestThreads, max, tests, 1, &averageCPP);
+	thread cppThread(cppPrimeTestThreads, max, tests, 1, &averageCPP);
 	thread asmThread(asmPrimeTestThreads, max, tests, 1, &averageASM);
 	//u64 primes=intrinPrimeD(max);
 	//printf("Amount of primes: %llu\n", primes);
-	
+	double completeTime=0;
+	u64 primeReturn=0;
+	asmPrimeTestThreadFunction(2, max, &completeTime, &primeReturn);
+	printf("OP Test Non Thread\n");
+	printf("Took: %llfs\n",completeTime);
+	printf("Amount of primes: %llu\n", primeReturn);
+	printf("=============================\n");
 	
 	//cppPrimeTestThreads(max, tests, 1, &averageCPP);
 	//asmPrimeTestThreads(max, tests, 1, &averageASM);
 	asmThread.join();
-	//cppThread.join();
+	cppThread.join();
 	
 	printf("Amount of times tested: %llu\n", tests);
 	printf("Max number: %llu\n", max);

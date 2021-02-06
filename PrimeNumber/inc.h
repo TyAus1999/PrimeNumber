@@ -6,6 +6,7 @@
 #include <immintrin.h>
 
 typedef unsigned long long u64;
+using namespace std;
 
 u64 getCurrentTimeMS() {
 	u64 out = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();

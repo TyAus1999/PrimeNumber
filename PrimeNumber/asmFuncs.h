@@ -35,14 +35,29 @@ void asmPrimeTestThreads(u64 max, u64 amountOfTests, u64 maxThreads, double* ave
 	thread t[threads];
 	double times[threads];
 	u64 primes[threads];
-	u64 scale = max / threads;
+	u64 threadStartIndex[threads];
+	u64 threadEndIndex[threads];
+
+	threadStartIndex[0] = 2;
+	threadStartIndex[1] = max/2;
+
+	threadEndIndex[0] = max/2;
+	threadEndIndex[1] = max;
+
 	for (u64 i = 0; i < threads; i++)
-		t[i] = thread(asmPrimeTestThreadFunction, 2, max, &times[i], &primes[i]);
+		t[i] = thread(asmPrimeTestThreadFunction, threadStartIndex[i], threadEndIndex[i], &times[i], &primes[i]);
 	for (u64 i = 0; i < threads; i++) {
 		t[i].join();
 		average += times[i];
 		primeOut += primes[i];
 	}
+	//primeOut /= threads;
+	//average /= threads;
 	average /= (double)amountOfTests;
+	printf("ASM Prime Threads:\n");
+	printf("Amount of primes: %llu\n", primeOut);
+	printf("Average time: %llf\n\n", average);
+
+	
 	*averageTime = average;
 }
